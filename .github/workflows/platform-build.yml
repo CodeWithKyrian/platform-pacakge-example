@@ -32,8 +32,8 @@ jobs:
       - name: Generate Build Matrix
         id: generate-matrix
         run: |
-          # Extract platforms from .platform.yml
-          platforms=$(yq e '.platforms | keys' .platform.yml)
+          # Extract platforms from platforms.yml
+          platforms=$(yq e '.platforms | keys' platforms.yml)
           json_platforms=$(echo "$platforms" | yq e -o=json)
           echo "matrix=$json_platforms" >> $GITHUB_OUTPUT
 
@@ -119,7 +119,7 @@ jobs:
 
           # Generate URLs for each platform
           FIRST=true
-          platforms=$(yq e '.platforms | keys' .platform.yml)
+          platforms=$(yq e '.platforms | keys' platforms.yml)
           for platform in $platforms; do
           if [ "$FIRST" = true ]; then
            FIRST=false
