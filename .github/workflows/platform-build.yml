@@ -131,7 +131,7 @@ jobs:
 
           # Generate URLs for each platform
           FIRST=true
-          platforms=fromJson(yq -o=json 'keys' platforms.yml)
+          platforms=$(yq -o=json 'keys' platforms.yml | jq -r '.[]')
           for platform in $platforms; do
           if [ "$FIRST" = true ]; then
            FIRST=false
