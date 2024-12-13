@@ -73,11 +73,11 @@ jobs:
           echo ".git" >> rsync_exclude.txt
           echo ".github" >> rsync_exclude.txt
           echo "rsync_exclude.txt" >> rsync_exclude.txt
-          echo "$DIST_DIR" >> rsync_exclude.txt
           
           # Copy files using rsync with exclusions
           DIST_DIR="dist-${{ matrix.platform }}"
           mkdir -p "$DIST_DIR"
+          echo "$DIST_DIR" >> rsync_exclude.txt
           rsync -av --exclude-from=rsync_exclude.txt ./ "$DIST_DIR"/
           
           # Compress artifact
@@ -98,7 +98,7 @@ jobs:
           files: dist-*
 
       - name: Upload Artifact to Artifact Hub
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: dist-${{ matrix.platform }}
           path: dist-*
