@@ -95,6 +95,14 @@ jobs:
         with:
           files: artifact-*
 
+      - name: Upload Artifact to Artifact Hub
+        uses: actions/upload-artifact@v3
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          name: artifact-${{ matrix.platform }}
+          path: artifact-*
+          retention-days: 1
+
   create-release-metadata:
     needs: [ prepare-artifacts, build-artifacts ]
 
