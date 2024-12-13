@@ -73,6 +73,7 @@ jobs:
           echo ".git" >> rsync_exclude.txt
           echo ".github" >> rsync_exclude.txt
           echo "rsync_exclude.txt" >> rsync_exclude.txt
+          echo "$DIST_DIR" >> rsync_exclude.txt
           
           # Copy files using rsync with exclusions
           DIST_DIR="dist-${{ matrix.platform }}"
