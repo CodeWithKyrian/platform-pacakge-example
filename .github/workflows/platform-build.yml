@@ -2,7 +2,7 @@ name: Create Platform-Specific Artifacts
 
 on:
   release:
-    types: [ published, created, edited ]
+    types: [ published, created, edited, prereleased ]
 
   workflow_dispatch:
     inputs:

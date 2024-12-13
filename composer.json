@@ -2,6 +2,7 @@
     "name": "kyrian/platform-pacakge-example",
     "description": "An example of a platform dependent composer package",
     "type": "platform-package",
+    "version": "1.0.0",
     "require": {
         "php": "^8.1"
     },
