@@ -33,7 +33,7 @@ jobs:
         id: generate-matrix
         run: |
           # Extract platforms from platforms.yml
-          platforms=$(yq 'keys' platforms.yml)
+          platforms=$(yq -o=json 'keys' platforms.yml)
           echo "$platforms"
           echo "platforms=$platforms" >> $GITHUB_OUTPUT
 
