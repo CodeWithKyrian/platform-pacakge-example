@@ -66,9 +66,9 @@ jobs:
             touch rsync_exclude.txt
           fi
           
-          # Add platform-specific exclusions from .platform.yml
+          # Add platform-specific exclusions from platforms.yml
           echo "" >> rsync_exclude.txt
-          yq e ".platforms.\"${{ matrix.platform }}\".exclude[]" .platform.yml >> rsync_exclude.txt
+          yq e ".platforms.\"${{ matrix.platform }}\".exclude[]" platforms.yml >> rsync_exclude.txt
           
           # Add standard exclusions
           echo ".git" >> rsync_exclude.txt
