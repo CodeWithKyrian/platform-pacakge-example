@@ -34,8 +34,8 @@ jobs:
         run: |
           # Extract platforms from platforms.yml
           platforms=$(yq 'keys' platforms.yml)
-          echo "$platforms"
-          json_platforms=$(echo "$platforms" | yq e -o=json)
+          json_platforms=$(echo "$platforms" | yq -o=json 'keys' platforms.yml)
+          echo "$json_platforms"
           echo "matrix=$json_platforms" >> $GITHUB_OUTPUT
 
   build-artifacts:
