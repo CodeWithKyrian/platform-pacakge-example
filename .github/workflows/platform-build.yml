@@ -72,34 +72,35 @@ jobs:
           # Add standard exclusions
           echo ".git" >> rsync_exclude.txt
           echo ".github" >> rsync_exclude.txt
+          echo "rsync_exclude.txt" >> rsync_exclude.txt
           
           # Copy files using rsync with exclusions
-          ARTIFACT_DIR="artifact-${{ matrix.platform }}"
-          mkdir -p "$ARTIFACT_DIR"
-          rsync -av --exclude-from=rsync_exclude.txt ./ "$ARTIFACT_DIR"/
+          DIST_DIR="dist-${{ matrix.platform }}"
+          mkdir -p "$DIST_DIR"
+          rsync -av --exclude-from=rsync_exclude.txt ./ "$DIST_DIR"/
           
           # Compress artifact
           if [[ "${{ matrix.platform }}" == windows-* ]]; then
-            zip -r "artifact-${{ matrix.platform }}.zip" "$ARTIFACT_DIR"
+            zip -r "dist-${{ matrix.platform }}.zip" "$DIST_DIR"
             ARTIFACT_EXT="zip"
           else
-            tar -czvf "artifact-${{ matrix.platform }}.tar.gz" "$ARTIFACT_DIR"
+            tar -czvf "dist-${{ matrix.platform }}.tar.gz" "$DIST_DIR"
             ARTIFACT_EXT="tar.gz"
           fi
           
-          echo "Artifact created: artifact-${{ matrix.platform }}.$ARTIFACT_EXT"
+          echo "Artifact created: dist-${{ matrix.platform }}.$ARTIFACT_EXT"
 
       - name: Upload Artifact to Release
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: artifact-*
+          files: dist-*
 
       - name: Upload Artifact to Artifact Hub
         uses: actions/upload-artifact@v3
         with:
-          name: artifact-${{ matrix.platform }}
-          path: artifact-*
+          name: dist-${{ matrix.platform }}
+          path: dist-*
           retention-days: 1
 
   create-release-metadata:
@@ -130,7 +131,7 @@ jobs:
 
           # Generate URLs for each platform
           FIRST=true
-          platforms=$(yq 'keys' platforms.yml)
+          platforms=$(yq -o=json 'keys' platforms.yml)
           for platform in $platforms; do
           if [ "$FIRST" = true ]; then
            FIRST=false
@@ -146,7 +147,7 @@ jobs:
           fi
           
           # Generate URL
-          printf '    "%s": "https://github.com/%s/releases/download/%s/artifact-%s.%s"' \
+          printf '    "%s": "https://github.com/%s/releases/download/%s/dist-%s.%s"' \
            "$platform" "$REPO" "$RELEASE_TAG" "$platform" "$EXT" >> platform-urls.json
           done
 
