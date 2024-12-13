@@ -34,8 +34,7 @@ jobs:
         run: |
           # Extract platforms from platforms.yml
           platforms=$(yq -o=json 'keys' platforms.yml)
-          echo "$platforms"
-          echo "platforms=$platforms" >> $GITHUB_OUTPUT
+          echo "platforms=$(echo $platforms | jq -c '. | map(split("/")[0]) | unique')" >> $GITHUB_OUTPUT
 
   build-artifacts:
     needs: prepare-artifacts
