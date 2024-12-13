@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
-      matrix: ${{ steps.generate-matrix.outputs.matrix }}
+      platforms: ${{ steps.generate-matrix.outputs.platforms }}
 
     steps:
       - name: Checkout code
@@ -34,9 +34,8 @@ jobs:
         run: |
           # Extract platforms from platforms.yml
           platforms=$(yq 'keys' platforms.yml)
-          json_platforms=$(echo "$platforms" | yq -o=json 'keys' platforms.yml)
-          echo "$json_platforms"
-          echo "matrix=$json_platforms" >> $GITHUB_OUTPUT
+          echo "$platforms"
+          echo "platforms=$platforms" >> $GITHUB_OUTPUT
 
   build-artifacts:
     needs: prepare-artifacts
@@ -45,7 +44,7 @@ jobs:
 
     strategy:
       matrix:
-        platform: ${{ fromJson(needs.prepare-artifacts.outputs.matrix) }}
+        platform: ${{ fromJson(needs.prepare-artifacts.outputs.platforms) }}
 
     steps:
       - name: Checkout code
