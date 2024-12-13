@@ -1,56 +1,55 @@
-platforms:
-  linux-x86_64:
-    exclude:
-      - linux-arm64/*
-      - darwin-*/*
-      - windows-*/*
-      - "*.exe"
-      - "*.dylib"
-      - "**/*.windows.*"
+linux-x86_64:
+  exclude:
+    - linux-arm64/*
+    - darwin-*/*
+    - windows-*/*
+    - "*.exe"
+    - "*.dylib"
+    - "**/*.windows.*"
 
-  linux-arm64:
-    exclude:
-      - linux-x86_64/*
-      - windows-*/*
-      - darwin-*/*
-      - "*.exe"
-      - "*.dylib"
-      - "**/*.windows.*"
+linux-arm64:
+  exclude:
+    - linux-x86_64/*
+    - windows-*/*
+    - darwin-*/*
+    - "*.exe"
+    - "*.dylib"
+    - "**/*.windows.*"
 
-  darwin-x86_64:
-    exclude:
-      - darwin-arm64/*
-      - windows-*/*
-      - linux-*/*
-      - "*.exe"
-      - "*.so"
-      - "**/*.linux.*"
+darwin-x86_64:
+  exclude:
+    - darwin-arm64/*
+    - windows-*/*
+    - linux-*/*
+    - "*.exe"
+    - "*.so"
+    - "**/*.linux.*"
 
-  darwin-arm64:
-    exclude:
-      - darwin-x86_64/*
-      - windows-*/*
-      - linux-*/*
-      - "*.exe"
-      - "*.so"
-      - "**/*.linux.*"
+darwin-arm64:
+  exclude:
+    - darwin-x86_64/*
+    - windows-*/*
+    - linux-*/*
+    - "*.exe"
+    - "*.so"
+    - "**/*.linux.*"
 
-  windows-x86_64:
-    exclude:
-      - windows-arm64/*
-      - linux-*/*
-      - darwin-*/*
-      - "*.so"
-      - "*.dylib"
-      - "**/*.darwin.*"
-      - "**/*.linux.*"
+windows-x86_64:
+  exclude:
+    - windows-arm64/*
+    - linux-*/*
+    - darwin-*/*
+    - "*.so"
+    - "*.dylib"
+    - "**/*.darwin.*"
+    - "**/*.linux.*"
 
-  windows-arm64:
-    exclude:
-      - windows-x86_64/*
-      - linux-*/*
-      - darwin-*/*
-      - "*.so"
-      - "*.dylib"
-      - "**/*.darwin.*"
-      - "**/*.linux.*"
+windows-arm64:
+  exclude:
+    - windows-x86_64/*
+    - linux-*/*
+    - darwin-*/*
+    - "*.so"
+    - "*.dylib"
+    - "**/*.darwin.*"
+    - "**/*.linux.*"
