@@ -74,20 +74,20 @@ jobs:
           echo ".github" >> rsync_exclude.txt
           
           # Copy files using rsync with exclusions
-          ARTIFACT_DIR="artifact-$PLATFORM"
+          ARTIFACT_DIR="artifact-${{ matrix.platform }}"
           mkdir -p "$ARTIFACT_DIR"
           rsync -av --exclude-from=rsync_exclude.txt ./ "$ARTIFACT_DIR"/
           
           # Compress artifact
-          if [[ "$PLATFORM" == windows-* ]]; then
-            zip -r "artifact-$PLATFORM.zip" "$ARTIFACT_DIR"
+          if [[ "${{ matrix.platform }}" == windows-* ]]; then
+            zip -r "artifact-${{ matrix.platform }}.zip" "$ARTIFACT_DIR"
             ARTIFACT_EXT="zip"
           else
-            tar -czvf "artifact-$PLATFORM.tar.gz" "$ARTIFACT_DIR"
+            tar -czvf "artifact-${{ matrix.platform }}.tar.gz" "$ARTIFACT_DIR"
             ARTIFACT_EXT="tar.gz"
           fi
           
-          echo "Artifact created: artifact-$PLATFORM.$ARTIFACT_EXT"
+          echo "Artifact created: artifact-${{ matrix.platform }}.$ARTIFACT_EXT"
 
       - name: Upload Artifact to Release
         uses: softprops/action-gh-release@v2
@@ -106,6 +106,11 @@ jobs:
         with:
           ref: ${{ github.event.inputs.release_tag || github.ref }}
 
+      - name: Install yq
+        run: |
+          wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/local/bin/yq
+          chmod +x /usr/local/bin/yq
+
       - name: Generate Platform URLs Metadata
         run: |
           # Prepare variables
@@ -118,7 +123,7 @@ jobs:
 
           # Generate URLs for each platform
           FIRST=true
-          platforms=$(yq '.platforms | keys' platforms.yml)
+          platforms=$(yq 'keys' platforms.yml)
           for platform in $platforms; do
           if [ "$FIRST" = true ]; then
            FIRST=false
