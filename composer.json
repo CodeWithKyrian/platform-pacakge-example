@@ -1,0 +1,20 @@
+{
+    "name": "kyrian/platform-pacakge-example",
+    "description": "An example of a platform dependent composer package",
+    "type": "platform-package",
+    "require": {
+        "php": "^8.1"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Kyrian\\PlatformPacakgeExample\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Kyrian Obikwelu",
+            "email": "koshnawaza@gmail.com"
+        }
+    ]
+}
